@@ -15,11 +15,11 @@
 ```
 Root
  -- vagrant/
- -- web/
+ -- www/
 ```
 
  * `vagrant/` contains this repository which is the VM configuration
- * `web/`     Project root and Apache DocumentRoot. The server will point here.
+ * `www/`     Project root and Apache DocumentRoot. The server will point here.
 
 ## How to Use
 
