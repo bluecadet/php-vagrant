@@ -14,9 +14,9 @@
 ## Project Architecture
 ```
 Root
- `-- vagrant/
- `-- web/
- ```
+ -- vagrant/
+ -- web/
+```
 
  * `vagrant/` contains this repository which is the VM configuration
  * `web/`     Project root and Apache DocumentRoot. The server will point here.
