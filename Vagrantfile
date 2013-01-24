@@ -14,7 +14,7 @@ Vagrant::Config.run do |config|
         # devbox_config.vm.forward_port 80, 8888
         # devbox_config.vm.forward_port 3306, 8889
         
-        devbox_config.vm.share_folder("www", "/var/www", "../web", :nfs => true, :extra => 'dmode=777,fmode=777')
+        devbox_config.vm.share_folder("www", "/var/www", "../www", :nfs => true, :extra => 'dmode=777,fmode=777')
         #config.vm.share_folder("v-root", "/vagrant", ".", :nfs => true)
         
         devbox_config.vm.provision :shell, :inline => "echo \"America/New_York\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
