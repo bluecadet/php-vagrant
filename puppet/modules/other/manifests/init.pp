@@ -3,7 +3,7 @@ class other
     $packages = [
         "curl", 
         "git",
-        "libicu44",
+        "libicu-dev",
     ]
     
     package 
