@@ -2,14 +2,14 @@
 	ServerName dev
 	ServerAdmin chuck@norris
 
-	DocumentRoot /var/www
+	DocumentRoot /var/www/web/
 	
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
 	</Directory>
 	
-	<Directory /var/www/>
+	<Directory /var/www/web/>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride All
 		Order allow,deny
