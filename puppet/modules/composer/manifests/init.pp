@@ -2,27 +2,22 @@ class composer
 {
     $tmpDir     = '/home/vagrant'
     $tmp        = '/home/vagrant/composer.phar'
-    $targetDir  = '/usr/local/bind'
+    $targetDir  = '/usr/local/bin'
     $target     = '/usr/local/bin/composer'
     
     package 
     { 
         "composer":
             ensure  => present,
-            require => [
-                Exec['apt-get update'],
-                Package["php5-cli", "curl"],
-            ]
+            require => Package["php5-cli", "curl"]
     }
     
     exec
     {
         "download_composer":
             command => 'curl -s http://getcomposer.org/installer | php',
-            cwd     => $tmpDir
-            require => [
-                Package['curl', 'php5-cli'],
-            ],
+            cwd     => "$tmpDir",
+            require => Package["php5-cli", "curl"],
             creates => "$tmp",
     }
     
@@ -30,8 +25,8 @@ class composer
     {
         "$target":
             ensure  => present,
-            source  => $tmp,
-            require => [Exec['download_composer'], File[$targetDir],],
+            source  => "$tmp",
+            require => Exec['download_composer'],
             group   => 'staff',
             mode    => '0755',
     }
