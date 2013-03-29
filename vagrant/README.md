@@ -18,8 +18,8 @@ Root
  -- www/
 ```
 
- * `vagrant/` contains the vagrant vm
- * `www/`     Project root and Apache DocumentRoot. The server points here.
+ * `vagrant/` contains this repository which is the VM configuration
+ * `www/`     Project root and Apache DocumentRoot. The server will point here.
 
 ## How to Use
 
