@@ -1,9 +1,12 @@
 class other 
 {
     $packages = [
-        "curl", 
-        "git",
-        "libicu-dev",
+        'build-essential',
+        'curl', 
+        'git', 
+        'htop',
+        'libicu-dev',
+        'python-software-properties'
     ]
     
     package 
