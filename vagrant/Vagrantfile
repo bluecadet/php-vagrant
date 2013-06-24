@@ -1,27 +1,23 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-Vagrant.configure('2') do |config|
+Vagrant.configure("2") do |config|
+  config.vm.box = "bci-bluecadet-web"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
-    config.vm.box = 'precise64'
-    config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
+  config.vm.network :private_network, ip: "11.11.11.11"
+    config.ssh.forward_agent = true
 
-    config.vm.hostname =  'dev'
-    config.vm.network :private_network, ip: '11.11.11.11'
-    
-    config.vm.synced_folder '../', '/var/www', :nfs => true, :extra => 'dmode=777,fmode=777'
+  config.vm.provider :virtualbox do |v|
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
+    v.customize ["modifyvm", :id, "--cpus",
+      `awk "/^processor/ {++n} END {print n}" /proc/cpuinfo 2> /dev/null || sh -c 'sysctl hw.logicalcpu 2> /dev/null || echo ": 2"' | awk \'{print \$2}\' `.chomp ]
+  end
 
-    config.vm.provider 'virtualbox' do |v|
-        v.gui = false
-        #v.name = 'bluecadet'
-        #v.customize ['modifyvm', :id, '--rtcuseutc', 'on', "--ioapic", "on"]
-        v.customize ['modifyvm', :id, '--rtcuseutc', 'on', '--ioapic', 'on', '--memory', '512']
-    end
-
-    config.vm.provision :shell, :inline => 'echo "America/New_York" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata'
-    config.vm.provision :puppet do |puppet|
-        puppet.manifests_path = "puppet/manifests"
-        puppet.manifest_file = "base.pp"
-        puppet.module_path = "puppet/modules"
-        # puppet.options = "--verbose --debug"
-    end
+  nfs_setting = RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/
+  config.vm.synced_folder "../www", "/var/www", id: "vagrant-root" , :nfs => nfs_setting
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "manifests"
+    puppet.module_path = "modules"
+    # puppet.options = ['--verbose']
+  end
 end
